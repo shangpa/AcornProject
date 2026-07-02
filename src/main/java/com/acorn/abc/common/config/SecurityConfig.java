@@ -55,7 +55,8 @@ public class SecurityConfig {
                         ).permitAll()
                         // Swagger
                         .requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**", "/webjars/**").permitAll()
-                        // TODO: 관리자 API - .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
+                        // 관리자 API
+                        .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(

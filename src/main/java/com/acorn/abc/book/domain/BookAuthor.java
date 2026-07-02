@@ -33,4 +33,13 @@ public class BookAuthor {
 
     @Column(name = "author_order", nullable = false)
     private int authorOrder;
+
+    public static BookAuthor create(Book book, Author author, int authorOrder) {
+        BookAuthor bookAuthor = new BookAuthor();
+        bookAuthor.id = new BookAuthorId(book.getBookId(), author.getAuthorId());
+        bookAuthor.book = book;
+        bookAuthor.author = author;
+        bookAuthor.authorOrder = authorOrder;
+        return bookAuthor;
+    }
 }

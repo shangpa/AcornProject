@@ -34,4 +34,12 @@ public class Author {
 
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
+
+    public static Author create(String authorName) {
+        Author author = new Author();
+        author.authorName = authorName;
+        author.status = "ACTIVE";
+        author.createdAt = LocalDateTime.now();
+        return author;
+    }
 }

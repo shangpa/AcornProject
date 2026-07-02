@@ -31,4 +31,12 @@ public class Publisher {
 
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
+
+    public static Publisher create(String publisherName) {
+        Publisher publisher = new Publisher();
+        publisher.publisherName = publisherName;
+        publisher.status = "ACTIVE";
+        publisher.createdAt = LocalDateTime.now();
+        return publisher;
+    }
 }

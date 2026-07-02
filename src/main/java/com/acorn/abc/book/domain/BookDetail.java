@@ -47,4 +47,16 @@ public class BookDetail {
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    public static BookDetail create(Book book, String description, String tableOfContents,
+                                    String publisherReview, String detailContent) {
+        BookDetail detail = new BookDetail();
+        detail.book = book;
+        detail.description = description;
+        detail.tableOfContents = tableOfContents;
+        detail.publisherReview = publisherReview;
+        detail.detailContent = detailContent;
+        detail.createdAt = LocalDateTime.now();
+        return detail;
+    }
 }

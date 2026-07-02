@@ -42,6 +42,13 @@ public enum ErrorCode {
 
     // Book
     BOOK_NOT_FOUND(HttpStatus.NOT_FOUND, "BOOK_NOT_FOUND", "존재하지 않는 도서입니다."),
+    BOOK_ISBN_ALREADY_EXISTS(HttpStatus.CONFLICT, "BOOK_ISBN_ALREADY_EXISTS", "이미 같은 ISBN으로 등록된 도서입니다."),
+    CATEGORY_NOT_FOUND(HttpStatus.NOT_FOUND, "CATEGORY_NOT_FOUND", "존재하지 않는 카테고리입니다."),
+
+    // BookIsbnTemp (외부 도서 수집)
+    BOOK_ISBN_TEMP_NOT_FOUND(HttpStatus.NOT_FOUND, "BOOK_ISBN_TEMP_NOT_FOUND", "존재하지 않는 수집 후보입니다."),
+    BOOK_ISBN_TEMP_NOT_READY(HttpStatus.CONFLICT, "BOOK_ISBN_TEMP_NOT_READY", "승인 가능한 상태(READY)가 아닙니다."),
+    BOOK_ISBN_TEMP_ALREADY_MERGED(HttpStatus.CONFLICT, "BOOK_ISBN_TEMP_ALREADY_MERGED", "이미 이관 완료된 수집 후보입니다."),
 
     // Rental
     RENTAL_ALREADY_EXISTS(HttpStatus.CONFLICT, "RENTAL_ALREADY_EXISTS", "이미 대여 중인 도서입니다."),

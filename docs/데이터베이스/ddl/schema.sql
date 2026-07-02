@@ -19,6 +19,7 @@ CREATE TABLE IF NOT EXISTS book_isbn_temp (
   description         TEXT NULL,
   pub_date            VARCHAR(20) NULL,
   aladin_category_id  VARCHAR(20) NULL,
+  aladin_category_name VARCHAR(255) NULL,
   naver_res_status    TINYINT NOT NULL DEFAULT 0,
   aladin_res_status   TINYINT NOT NULL DEFAULT 0,
   status_cd           TINYINT NOT NULL DEFAULT 0,
@@ -62,13 +63,15 @@ CREATE TABLE IF NOT EXISTS author (
   CONSTRAINT chk_author_status CHECK (author_status IN ('ACTIVE', 'INACTIVE'))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- [주의] 알라딘 API의 categoryId(숫자 코드)를 category_name으로 매핑하는 파싱 로직 별도 구현 필요
+-- 알라딘 categoryId/categoryName은 leaf category에 참고용으로 연결한다 (AladinCategoryImportService 자동 생성).
 CREATE TABLE IF NOT EXISTS category (
   category_id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   parent_category_id BIGINT UNSIGNED NULL,
   category_name VARCHAR(100) NOT NULL,
   display_order INT UNSIGNED NOT NULL DEFAULT 0,
   category_status VARCHAR(20) NOT NULL,
+  aladin_category_id VARCHAR(20) NULL,
+  aladin_category_name VARCHAR(255) NULL,
   CONSTRAINT pk_category PRIMARY KEY (category_id),
   CONSTRAINT chk_category_status CHECK (category_status IN ('ACTIVE', 'INACTIVE'))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -591,6 +594,8 @@ ALTER TABLE book_author ADD CONSTRAINT fk_book_author_author FOREIGN KEY (author
 ALTER TABLE book_detail ADD CONSTRAINT fk_book_detail_book FOREIGN KEY (book_id) REFERENCES book(book_id);
 ALTER TABLE book_page ADD CONSTRAINT fk_book_page_book FOREIGN KEY (book_id) REFERENCES book(book_id);
 ALTER TABLE category ADD CONSTRAINT fk_category_category FOREIGN KEY (parent_category_id) REFERENCES category(category_id);
+ALTER TABLE category ADD CONSTRAINT uk_category_aladin_category_id UNIQUE (aladin_category_id);
+ALTER TABLE category ADD CONSTRAINT uk_category_parent_name UNIQUE (parent_category_id, category_name);
 ALTER TABLE book_category ADD CONSTRAINT fk_book_category_book FOREIGN KEY (book_id) REFERENCES book(book_id);
 ALTER TABLE book_category ADD CONSTRAINT fk_book_category_category FOREIGN KEY (category_id) REFERENCES category(category_id);
 ALTER TABLE book_keyword_map ADD CONSTRAINT fk_book_keyword_map_book FOREIGN KEY (book_id) REFERENCES book(book_id);

@@ -47,6 +47,9 @@ public class BookIsbnTemp {
     @Column(name = "aladin_category_id", length = 20)
     private String aladinCategoryId;
 
+    @Column(name = "aladin_category_name", length = 255)
+    private String aladinCategoryName;
+
     @Column(name = "naver_res_status", nullable = false)
     private byte naverResStatus;
 
@@ -61,4 +64,50 @@ public class BookIsbnTemp {
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    public static final byte STATUS_PENDING = 0;
+    public static final byte STATUS_READY = 1;
+    public static final byte STATUS_MERGED = 2;
+
+    public static BookIsbnTemp create(String isbn13) {
+        BookIsbnTemp temp = new BookIsbnTemp();
+        temp.isbn13 = isbn13;
+        temp.naverResStatus = 0;
+        temp.aladinResStatus = 0;
+        temp.statusCd = STATUS_PENDING;
+        temp.createdAt = LocalDateTime.now();
+        return temp;
+    }
+
+    public void applyMetadata(String bookTitle, String publisher, String author,
+                              String coverImageUrl, String description, String pubDate,
+                              String aladinCategoryId, String aladinCategoryName,
+                              byte naverResStatus, byte aladinResStatus) {
+        this.bookTitle = bookTitle;
+        this.publisher = publisher;
+        this.author = author;
+        this.coverImageUrl = coverImageUrl;
+        this.description = description;
+        this.pubDate = pubDate;
+        this.aladinCategoryId = aladinCategoryId;
+        this.aladinCategoryName = aladinCategoryName;
+        this.naverResStatus = naverResStatus;
+        this.aladinResStatus = aladinResStatus;
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    public void markReady() {
+        this.statusCd = STATUS_READY;
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    public void markPending() {
+        this.statusCd = STATUS_PENDING;
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    public void markMerged() {
+        this.statusCd = STATUS_MERGED;
+        this.updatedAt = LocalDateTime.now();
+    }
 }

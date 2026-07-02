@@ -29,4 +29,12 @@ public class BookCategory {
     @MapsId("categoryId")
     @JoinColumn(name = "category_id")
     private Category category;
+
+    public static BookCategory create(Book book, Category category) {
+        BookCategory bookCategory = new BookCategory();
+        bookCategory.id = new BookCategoryId(book.getBookId(), category.getCategoryId());
+        bookCategory.book = book;
+        bookCategory.category = category;
+        return bookCategory;
+    }
 }

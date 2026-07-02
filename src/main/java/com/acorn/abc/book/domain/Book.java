@@ -73,4 +73,25 @@ public class Book {
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    public static Book create(Publisher publisher, String title, String isbn, String coverImageUrl,
+                              LocalDate pubDate, String rentalType, int rentalPrice,
+                              int defaultRentalDays, int totalPages, String status) {
+        Book book = new Book();
+        book.publisher = publisher;
+        book.title = title;
+        book.isbn = isbn;
+        book.coverImageUrl = coverImageUrl;
+        book.pubDate = pubDate;
+        book.rentalType = rentalType;
+        book.rentalPrice = rentalPrice;
+        book.defaultRentalDays = defaultRentalDays;
+        book.totalPages = totalPages;
+        book.rentalCount = 0;
+        book.averageRating = BigDecimal.ZERO;
+        book.reviewCount = 0;
+        book.status = status;
+        book.createdAt = LocalDateTime.now();
+        return book;
+    }
 }

@@ -41,4 +41,13 @@ public class BookPage {
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    public static BookPage create(Book book, int pageNo, String pageContent) {
+        BookPage page = new BookPage();
+        page.book = book;
+        page.pageNo = pageNo;
+        page.pageContent = pageContent;
+        page.createdAt = LocalDateTime.now();
+        return page;
+    }
 }

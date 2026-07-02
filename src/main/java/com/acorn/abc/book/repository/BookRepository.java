@@ -9,8 +9,31 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface BookRepository extends JpaRepository<Book, Long>, JpaSpecificationExecutor<Book> {
+
+    boolean existsByIsbn(String isbn);
+
+    Optional<Book> findByIsbn(String isbn);
+
+    @Query("SELECT DISTINCT b FROM Book b LEFT JOIN b.publisher p " +
+            "WHERE (b.isbn IS NULL OR b.isbn <> :isbn) " +
+            "AND (b.title LIKE :titleLike " +
+            "  OR (:publisher IS NOT NULL AND p.publisherName LIKE :publisherLike) " +
+            "  OR (:author IS NOT NULL AND EXISTS (" +
+            "    SELECT 1 FROM BookAuthor ba WHERE ba.book = b AND ba.author.authorName LIKE :authorLike))" +
+            ") " +
+            "ORDER BY b.bookId DESC")
+    List<Book> findPossibleDuplicates(
+            @Param("isbn") String isbn,
+            @Param("titleLike") String titleLike,
+            @Param("publisher") String publisher,
+            @Param("publisherLike") String publisherLike,
+            @Param("author") String author,
+            @Param("authorLike") String authorLike,
+            Pageable pageable
+    );
 
     @Query("SELECT DISTINCT b FROM Book b LEFT JOIN b.publisher p " +
             "WHERE b.status = 'AVAILABLE' " +
