@@ -47,4 +47,14 @@ public class CouponUsage {
 
     @Column(name = "used_at", nullable = false)
     private LocalDateTime usedAt;
+
+    public static CouponUsage create(MemberCoupon memberCoupon, BookRental rental, Payment payment, int discountAmount, LocalDateTime usedAt) {
+        CouponUsage usage = new CouponUsage();
+        usage.memberCoupon = memberCoupon;
+        usage.rental = rental;
+        usage.payment = payment;
+        usage.discountAmount = discountAmount;
+        usage.usedAt = usedAt;
+        return usage;
+    }
 }

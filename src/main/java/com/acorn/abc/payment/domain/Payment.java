@@ -56,4 +56,18 @@ public class Payment {
 
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
+
+    public static Payment create(Member member, BookRental rental, int originalAmount, int amount, LocalDateTime paidAt) {
+        Payment payment = new Payment();
+        payment.member = member;
+        payment.rental = rental;
+        payment.paymentType = "RENTAL";
+        payment.originalAmount = originalAmount;
+        payment.amount = amount;
+        payment.paymentMethod = "CARD";
+        payment.paymentStatus = "PAID";
+        payment.paidAt = paidAt;
+        payment.createdAt = paidAt;
+        return payment;
+    }
 }

@@ -51,4 +51,16 @@ public class Notification {
 
     @Column(name = "read_at")
     private LocalDateTime readAt;
+
+    public static Notification create(Member member, String notificationType, String title, String targetType, Long targetId, LocalDateTime createdAt) {
+        Notification notification = new Notification();
+        notification.member = member;
+        notification.notificationType = notificationType;
+        notification.title = title;
+        notification.targetType = targetType;
+        notification.targetId = targetId;
+        notification.readYn = false;
+        notification.createdAt = createdAt;
+        return notification;
+    }
 }

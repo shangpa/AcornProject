@@ -94,4 +94,8 @@ public class Book {
         book.createdAt = LocalDateTime.now();
         return book;
     }
+
+    public void increaseRentalCount() {
+        this.rentalCount++;
+    }
 }

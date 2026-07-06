@@ -61,7 +61,10 @@ public enum ErrorCode {
     BOOKMARK_ALREADY_EXISTS(HttpStatus.CONFLICT, "BOOKMARK_ALREADY_EXISTS", "이미 같은 페이지에 북마크가 있습니다."),
 
     // Payment
-    PAYMENT_FAILED(HttpStatus.BAD_REQUEST, "PAYMENT_FAILED", "결제에 실패했습니다.");
+    PAYMENT_FAILED(HttpStatus.BAD_REQUEST, "PAYMENT_FAILED", "결제에 실패했습니다."),
+    BOOK_RENTAL_TYPE_MISMATCH(HttpStatus.BAD_REQUEST, "BOOK_RENTAL_TYPE_MISMATCH", "도서의 대여 유형과 일치하지 않는 요청입니다."),
+    MEMBER_COUPON_NOT_USABLE(HttpStatus.CONFLICT, "MEMBER_COUPON_NOT_USABLE", "사용할 수 없는 쿠폰입니다."),
+    POINT_BALANCE_INSUFFICIENT(HttpStatus.BAD_REQUEST, "POINT_BALANCE_INSUFFICIENT", "포인트 잔액이 부족합니다.");
 
     private final HttpStatus httpStatus;
     private final String code;
