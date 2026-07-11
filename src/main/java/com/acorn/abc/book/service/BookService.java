@@ -241,6 +241,12 @@ public class BookService {
         if ("popular".equals(sort)) {
             return Sort.by(Sort.Order.desc("rentalCount"), Sort.Order.desc("reviewCount"), Sort.Order.desc("bookId"));
         }
+        if ("rating".equals(sort)) {
+            return Sort.by(Sort.Order.desc("averageRating"), Sort.Order.desc("reviewCount"), Sort.Order.desc("bookId"));
+        }
+        if ("reviews".equals(sort)) {
+            return Sort.by(Sort.Order.desc("reviewCount"), Sort.Order.desc("bookId"));
+        }
         return Sort.by(Sort.Order.desc("createdAt"), Sort.Order.desc("bookId"));
     }
 
@@ -265,7 +271,8 @@ public class BookService {
             return "latest";
         }
         // 잘못된 sort 값은 latest로 조용히 넘기지 않고 VALIDATION_ERROR로 응답한다(normalizeRentalType과 동일 패턴, 계획 2-5)
-        if (!"latest".equals(value) && !"title".equals(value) && !"popular".equals(value)) {
+        if (!"latest".equals(value) && !"title".equals(value) && !"popular".equals(value)
+                && !"rating".equals(value) && !"reviews".equals(value)) {
             throw new BusinessException(ErrorCode.VALIDATION_ERROR);
         }
         return value;
